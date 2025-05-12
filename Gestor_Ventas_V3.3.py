@@ -2053,9 +2053,34 @@ def menu_venta_empleado(ID_empleado):
             return
 
         # Obtener cliente
-        id_cliente = Prompt.ask("[bold cyan]Ingresa el ID del cliente (CLI_001 si es público en general):[/]").strip()
-        if not id_cliente:
-            id_cliente = "CLI_001"
+        clientes_lista = db.query(Clientes).filter(Clientes.estado == "Activo").all()
+        cliente_ids = {cliente.id_cliente for cliente in clientes_lista}
+
+        # Mostrar tabla si el usuario ingresa '?'
+        while True:
+            id_cliente = Prompt.ask("[bold cyan]Ingresa el ID del cliente (CLI_001 si es público en general, '?' para ver clientes):[/]").strip()
+            
+            if not id_cliente:
+                id_cliente = "CLI_001"
+                break
+
+            elif id_cliente == '?':
+                # Mostrar tabla de clientes
+                table = Table(title="Clientes Registrados", style="cyan")
+                table.add_column("ID Cliente", style="bold white")
+                table.add_column("Nombres", style="bold green")
+                table.add_column("Apellidos", style="bold green")
+
+                for cliente in clientes_lista:
+                    table.add_row(cliente.id_cliente, cliente.nombres, cliente.apellidos)
+
+                print(table)
+
+            elif id_cliente not in cliente_ids:
+                tema_advertencia.print("[ERROR \u274C ] No existe ningún cliente con ese ID. Intente de nuevo o ingrese '?'\n", style="error")
+
+            else:
+                break
 
         for item in carrito:
             movimiento = Movimientos(

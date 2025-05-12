@@ -100,8 +100,9 @@ class Movimientos(Base):
     # Variables de enlace
     usuario = relationship("Usuarios", back_populates= "movimiento")
     producto = relationship("Productos", back_populates= "movimiento")
-    venta = relationship("Ventas", back_populates= "movimiento")
-    compra = relationship("Compras", back_populates= "movimiento")
+    compra = relationship("Compras", back_populates= "movimiento", uselist=False)
+    venta = relationship("Ventas", back_populates="movimiento", uselist=False)
+
 
     # Especificacion en atributos
     __table_args__ = (
@@ -121,7 +122,7 @@ class Clientes(Base):
     usuario = Column(String, nullable=False, unique=True)
     contraseña = Column(String, nullable=False)
     # Variables de enlace
-    venta = relationship("Ventas", back_populates= "cliente")
+    ventas = relationship("Ventas", back_populates="cliente")
 
     # Especificacion en atributos
     __table_args__ = (
@@ -155,7 +156,7 @@ class Ventas(Base):
     id_cliente = Column(String, ForeignKey('cliente.id_cliente'), nullable=False)
     # Variables de enlace
     movimiento = relationship("Movimientos", back_populates= "venta")
-    cliente = relationship("Clientes", back_populates= "venta")
+    cliente = relationship("Clientes", back_populates="ventas")
 
 class Compras(Base):
     __tablename__ = 'compra'
