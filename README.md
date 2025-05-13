@@ -25,7 +25,7 @@ Este es un sistema de gestión de inventarios diseñado para adaptarse a cualqui
 - **Visualización en consola:** Rich  
 - **Otras librerías:**
   - `datetime`, `re`, `contextlib`
-  - Módulo interno: `database_V3_1.py` (modelo de datos y sesión)
+  - Módulo interno: `database_V3_2.py` (modelo de datos y sesión)
 
 ---
 
@@ -55,12 +55,12 @@ pip install rich sqlalchemy
 
 1. Ejecuta el archivo de la base de datos:
    ```bash
-   python database_V3_1.py
+   python database_V3_2.py
    ```
 
 2. Luego ejecuta el archivo principal del sistema:
    ```bash
-   python main.py
+   Gestor_Ventas_V3.7.py
    ```
 
 ---
